@@ -6,6 +6,8 @@ import { Route, Router, Switch }from 'react-router-dom';
 import history from './utils/history';
 import PrivateRoute from './components/PrivateRoute';
 import List from './components/List';
+import WelcomePage from './components/WelcomePage';
+import Redirect from 'react-router-dom/es/Redirect';
 
 function App() {
   const { loading } = useAuth0();
@@ -21,9 +23,11 @@ function App() {
         <NavBar />
       </header>
         <div className="container-fluid">
+
           <Switch>
-            <Route path="/" exact />
+            <Route path="/start" component={WelcomePage} />
             <PrivateRoute path="/list" component={List} />
+            <Redirect from="/" to="list"/>
           </Switch>
         </div>
 
