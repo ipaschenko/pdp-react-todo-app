@@ -4,8 +4,8 @@ import './App.css';
 import NavBar from './components/navbar/NavBar';
 import { Route, Router, Switch }from 'react-router-dom';
 import history from './utils/history';
-import Profile from './components/profile/Profile';
 import PrivateRoute from './components/PrivateRoute';
+import List from './components/List';
 
 function App() {
   const { loading } = useAuth0();
@@ -23,8 +23,7 @@ function App() {
         <div className="container-fluid">
           <Switch>
             <Route path="/" exact />
-            <PrivateRoute path="/profile" component={Profile} />
-            {/*<Route path="/profile" component={Profile} />*/}
+            <PrivateRoute path="/list" component={List} />
           </Switch>
         </div>
 

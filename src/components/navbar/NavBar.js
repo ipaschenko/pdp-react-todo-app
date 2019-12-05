@@ -14,12 +14,11 @@ function NavBar () {
 
   <nav className="navbar navbar-light bg-light">
     <h1>Title</h1>
-    <div className="float-right1">
+    <div className="navbar__right-block">
       {isAuthenticated && <Profile />}
       {navButton}
-
     </div>
-  </nav>
+</nav>
   )
 }
 
