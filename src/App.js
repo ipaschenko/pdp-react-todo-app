@@ -19,18 +19,14 @@ function App() {
   return (
     <div className="App">
       <Router history={history}>
-      <header>
-        <NavBar />
-      </header>
-        <div className="container-fluid">
-
-          <Switch>
-            <Route path="/start" component={WelcomePage} />
-            <PrivateRoute path="/list" component={List} />
-            <Redirect from="/" to="list"/>
-          </Switch>
-        </div>
-
+        <header>
+          <NavBar />
+        </header>
+        <Switch>
+          <Route path="/start" component={WelcomePage} />
+          <PrivateRoute path="/list" component={List} />
+          <Redirect from="/" to="list"/>
+        </Switch>
       </Router>
     </div>
   );
