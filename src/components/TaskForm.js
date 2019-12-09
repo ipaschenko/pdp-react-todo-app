@@ -1,38 +1,55 @@
 import React, { useState } from 'react';
+import * as axios from 'axios';
+import { useAuth0 } from '../react-auth0-spa';
 
 function TaskForm() {
+  const {getTokenSilently} = useAuth0();
 
+  const [values, setValues] = useState({title: '', text: ''});
 
-  useState() {}
+  const handleFormControlChange = (e) => {
+    setValues({...values, [e.target.name]: e.target.value});
+  };
+  
+  const handlerSubmitForm = (e) => {
+    e.preventDefault();
+    if (values.title.length && values.text.length) {
+      createTask();
+    }
+  };
 
-  render() {
-    return (
-      <div className='form-group'>
-        <form>
-          <div className='form-group'>
-            <input className="form-control"
-                   type="text"
-                   name='title'
-                   placeholder="Title"
-                   value={this.state.title}
-                   onChange={this.handleFormControlChange} required/>
-          </div>
+  const createTask = async () => {
+    const headers = {Authorization: `Bearer ${await getTokenSilently()}`};
+    console.log(values);
+    console.log(headers);
+    axios.post('http://localhost:5000/list', values, {headers}).then(() => {});
+  };
 
-          <div className='form-group'>
-            <textarea className="form-control"
-                      name="text"
-                      placeholder="Text"
-                      value={this.state.text}
-                      onChange={this.handleFormControlChange}></textarea>
-          </div>
+  return (
+    <div className='form-group'>
+      <form onSubmit={handlerSubmitForm}>
+        <div className='form-group'>
+          <input className="form-control"
+                 type="text"
+                 name='title'
+                 placeholder="Title"
+                 value={values.title}
+                 onChange={handleFormControlChange} required/>
+        </div>
 
-          <button className="btn btn-outline-primary float-right"
-                  onClick={this.submitForm}>Create</button>
-        </form>
-      </div>
+        <div className='form-group'>
+          <textarea className="form-control"
+                    name="text"
+                    placeholder="Text"
+                    value={values.text}
+                    onChange={handleFormControlChange}></textarea>
+        </div>
 
-    );
-  }
+        <button className="btn btn-outline-primary float-right"
+                onClick={handlerSubmitForm}>Create</button>
+      </form>
+    </div>
+  );
 }
 
 export default TaskForm;

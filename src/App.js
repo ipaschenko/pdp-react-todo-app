@@ -2,12 +2,11 @@ import React from 'react';
 import { useAuth0 } from './react-auth0-spa';
 import './App.css';
 import NavBar from './components/navbar/NavBar';
-import { Route, Router, Switch }from 'react-router-dom';
+import { Route, Router, Switch, Redirect }from 'react-router-dom';
 import history from './utils/history';
 import PrivateRoute from './components/PrivateRoute';
 import List from './components/List';
 import WelcomePage from './components/WelcomePage';
-import Redirect from 'react-router-dom/es/Redirect';
 
 function App() {
   const { loading } = useAuth0();

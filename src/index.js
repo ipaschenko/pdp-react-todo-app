@@ -17,12 +17,12 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-
 ReactDOM.render(
   <Auth0Provider
     domain={config.domain}
     client_id={config.clientId}
     redirect_uri={'http://localhost:3000/list'}
+    audience={config.audience}
     onRedirectCallback={onRedirectCallback}
   >
     <App />

@@ -10,8 +10,6 @@ function NavBar () {
     (<button type="button" className="btn btn-outline-success" onClick={() => loginWithRedirect({})}>Log in</button>);
 
   return (
-
-
   <nav className="navbar navbar-light bg-light">
     <h1>Title</h1>
     <div className="navbar__right-block">
@@ -23,11 +21,3 @@ function NavBar () {
 }
 
 export default NavBar;
-
-// eslint-disable-next-line
-/*<div>*/
-/*  {!isAuthenticated && (*/
-/*    <button onClick={() => loginWithRedirect({})}>Log in</button>*/
-/*  )}*/
-/*  {isAuthenticated && <button onClick={() => logout()}>Log out</button>}*/
-/*</div>*/
