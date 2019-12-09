@@ -20,8 +20,6 @@ function TaskForm() {
 
   const createTask = async () => {
     const headers = {Authorization: `Bearer ${await getTokenSilently()}`};
-    console.log(values);
-    console.log(headers);
     axios.post('http://localhost:5000/list', values, {headers}).then(() => {});
   };
 

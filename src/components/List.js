@@ -3,14 +3,13 @@ import * as axios from 'axios';
 import AlertError from './shared/AlertError';
 import { useAuth0 } from '../react-auth0-spa';
 import TaskForm from './TaskForm';
+import ListItem from './list/ListItem';
 
 function List() {
   const {user, getTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState('This is test errorrrrrr text!');
-
-  console.log(user);
 
   useEffect(async () => {
     const token = await getTokenSilently();
@@ -41,7 +40,7 @@ function List() {
             {loading}
           </div>
         </div>
-        List
+    {list.map((item) => <ListItem task={item} />)}
       </div>);
 }
 
