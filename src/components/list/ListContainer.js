@@ -5,6 +5,7 @@ import { useAuth0 } from '../../react-auth0-spa';
 import { BACKEND_URL } from '../../config';
 import TaskForm from './TaskForm';
 import ListGroup from './ListGroup';
+import { deleteTask } from '../../utils/HttpUtils';
 
 function ListContainer() {
   const {getTokenSilently } = useAuth0();
@@ -48,13 +49,12 @@ function ListContainer() {
 
   const deleteTask = async (id) => {
     console.log('deleteTask ', id);
-    const token = await getTokenSilently();
-    const headers = {Authorization: `Bearer ${token}`};
-    axios
-      .delete(`${BACKEND_URL}/list/${id}`, {headers})
-      .then(() => {
-        getList();
-      });
+    deleteTask.then.then(() => getList());
+    // const token = await getTokenSilently();
+    // const headers = {Authorization: `Bearer ${token}`};
+    // axios
+    //   .delete(`${BACKEND_URL}/list/${id}`, {headers})
+    //
   };
 
   return (<div className="container-fluid">
