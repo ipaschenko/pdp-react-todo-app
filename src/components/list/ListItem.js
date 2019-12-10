@@ -7,19 +7,20 @@ function ListItem(props) {
       return (<div className="card-footer">
         <button type="button"
                 className="btn btn-sm"
-                onClick={() => {}}>Done</button>
+                disabled={true}
+                >Done</button>
         <button type="button"
                 className="btn btn-sm float-right"
-                onClick={() => {}}>Delete</button>
+                onClick={() => props.onDelete(task._id)}>Delete</button>
       </div>);
     } else {
       return (<div className="card-footer">
         <button type="button"
                 className="btn btn-sm"
-                onClick={() => {}}>Done</button>
+                onClick={() => props.onDone(task._id)}>Done</button>
         <button type="button"
                 className="btn btn-sm float-right"
-                onClick={() => props.onDelete(props.task._id)}>Delete</button>
+                onClick={() => props.onDelete(task._id)}>Delete</button>
       </div>);
     }
   }

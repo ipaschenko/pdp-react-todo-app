@@ -4,31 +4,26 @@ import AlertError from '../shared/AlertError';
 import { useAuth0 } from '../../react-auth0-spa';
 import { BACKEND_URL } from '../../config';
 import TaskForm from './TaskForm';
-import ListGroup from './ListGroup';
-import { deleteTask } from '../../utils/HttpUtils';
+import ListItem from './ListItem';
 
 function ListContainer() {
-  const {getTokenSilently } = useAuth0();
+  const { getTokenSilently } = useAuth0();
+
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
-  const [error, setError] = useState('This is test errorrrrrr text!');
+  const [error, setError] = useState('');
 
   const getList = useCallback(async () => {
     const token = await getTokenSilently();
-    console.log(token);
     const headers = {Authorization: `Bearer ${token}`};
 
     axios
       .get(`${BACKEND_URL}/list`, {headers})
       .then((res) => {
-        console.log(res.data);
         setList(res.data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log('Error: ', err.toString());
-        setError(err.toString());
-      });
+      .catch((err) => setError(err.toString()));
   }, [getTokenSilently]);
 
   useEffect(() => {
@@ -37,24 +32,42 @@ function ListContainer() {
 
   const handleTaskEdit = async (formValue) => {
     const token = await getTokenSilently();
-    console.log(token);
     const headers = {Authorization: `Bearer ${token}`};
 
     axios
       .post(`${BACKEND_URL}/list`, formValue, {headers})
-      .then(() => {
-        getList();
-      });
+      .then(() => getList())
+      .catch((err) => setError(err.toString()));
   };
 
   const deleteTask = async (id) => {
-    console.log('deleteTask ', id);
-    deleteTask.then.then(() => getList());
-    // const token = await getTokenSilently();
-    // const headers = {Authorization: `Bearer ${token}`};
-    // axios
-    //   .delete(`${BACKEND_URL}/list/${id}`, {headers})
-    //
+    const token = await getTokenSilently();
+    const headers = {Authorization: `Bearer ${token}`};
+    axios
+      .delete(`${BACKEND_URL}/list/${id}`, {headers})
+      .then(() => getList())
+      .catch((err) => setError(err.toString()));
+  };
+
+  const doneTask = async (id) => {
+    const token = await getTokenSilently();
+    const headers = {Authorization: `Bearer ${token}`};
+    axios
+      .patch(`${BACKEND_URL}/list/${id}`, {done: true}, {headers})
+      .then(() => getList())
+      .catch((err) => setError(err.toString()));
+  };
+
+  const editTask = (task) => {
+
+  };
+
+  const createTaskItem = (task) => {
+    return (<ListItem task={task}
+                      key={task._id}
+                      onDelete={deleteTask}
+                      onEdit={editTask}
+                      onDone={doneTask}/>);
   };
 
   return (<div className="container-fluid">
@@ -69,8 +82,8 @@ function ListContainer() {
             {loading}
           </div>
         </div>
-          <ListGroup list={list.filter((item) => !item.done)} onDelete={deleteTask} />
-          <ListGroup list={list.filter((item) => item.done)} onDelete={deleteTask} />
+        <div className="row">{list.filter((item) => !item.done).map(item => createTaskItem(item))}</div>
+        <div className="row">{list.filter((item) =>  item.done).map(item => createTaskItem(item))}</div>
       </div>);
 }
 
