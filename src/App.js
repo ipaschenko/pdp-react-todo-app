@@ -1,11 +1,10 @@
 import React from 'react';
 import { useAuth0 } from './react-auth0-spa';
-import './App.css';
 import NavBar from './components/navbar/NavBar';
 import { Route, Router, Switch, Redirect }from 'react-router-dom';
 import history from './utils/history';
 import PrivateRoute from './components/PrivateRoute';
-import List from './components/List';
+import ListContainer from './components/list/ListContainer';
 import WelcomePage from './components/WelcomePage';
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
         </header>
         <Switch>
           <Route path="/start" component={WelcomePage} />
-          <PrivateRoute path="/list" component={List} />
+          <PrivateRoute path="/list" component={ListContainer} />
           <Redirect from="/" to="list"/>
         </Switch>
       </Router>

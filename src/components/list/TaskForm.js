@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import * as axios from 'axios';
-import { useAuth0 } from '../react-auth0-spa';
+import formValidator from '../../utils/formValidator';
 
-function TaskForm() {
-  const {getTokenSilently} = useAuth0();
-
-  const [values, setValues] = useState({title: '', text: ''});
+function TaskForm(props) {
+  const initFormValue = {title: '', text: ''};
+  const [values, setValues] = useState(initFormValue);
 
   const handleFormControlChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value});
@@ -13,14 +11,10 @@ function TaskForm() {
   
   const handlerSubmitForm = (e) => {
     e.preventDefault();
-    if (values.title.length && values.text.length) {
-      createTask();
+    if (formValidator(values)) {
+      props.onFormSubmit(values);
+      setValues(initFormValue);
     }
-  };
-
-  const createTask = async () => {
-    const headers = {Authorization: `Bearer ${await getTokenSilently()}`};
-    axios.post('http://localhost:5000/list', values, {headers}).then(() => {});
   };
 
   return (
