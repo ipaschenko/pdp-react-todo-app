@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import * as axios from 'axios/index';
 import history from '../../utils/history';
+import { fetchTasks, createTask, deleteTask, updateTask } from '../../utils/HttpService';
 import { useAuth0 } from '../../react-auth0-spa';
-import { BACKEND_URL } from '../../config';
 import AlertError from '../shared/AlertError';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
@@ -18,10 +17,7 @@ function ListContainer() {
 
   const getList = useCallback(async () => {
     const token = await getTokenSilently();
-    const headers = {Authorization: `Bearer ${token}`};
-
-    axios
-      .get(`${BACKEND_URL}/list`, {headers})
+    fetchTasks(token)
       .then((res) => {
         setList(res.data);
         setLoading(false);
@@ -35,42 +31,35 @@ function ListContainer() {
 
   const handleTaskEdit = async (formValue) => {
     const token = await getTokenSilently();
-    const headers = {Authorization: `Bearer ${token}`};
-
-    axios
-      .post(`${BACKEND_URL}/list`, formValue, {headers})
+    createTask(token, formValue)
       .then(() => getList())
       .catch((err) => setError(err.toString()));
   };
 
-  const deleteTask = async (id) => {
+  const deleteItem = async (id) => {
     const token = await getTokenSilently();
-    const headers = {Authorization: `Bearer ${token}`};
-    axios
-      .delete(`${BACKEND_URL}/list/${id}`, {headers})
+    deleteTask(token, id)
       .then(() => getList())
       .catch((err) => setError(err.toString()));
   };
 
-  const doneTask = async (id) => {
+  const doneItem = async (id) => {
     const token = await getTokenSilently();
-    const headers = {Authorization: `Bearer ${token}`};
-    axios
-      .patch(`${BACKEND_URL}/list/${id}`, {done: true}, {headers})
+    updateTask(token, id, {done: true})
       .then(() => getList())
       .catch((err) => setError(err.toString()));
   };
 
-  const editTask = (task) => {
+  const editItem = (task) => {
     history.push('/task-edit', task);
   };
 
   const createTaskItem = (task) => {
     return (<ListItem task={task}
                       key={task._id}
-                      onDelete={deleteTask}
-                      onEdit={editTask}
-                      onDone={doneTask}/>);
+                      onDelete={deleteItem}
+                      onEdit={editItem}
+                      onDone={doneItem}/>);
   };
 
   return (<div className="container-fluid">
@@ -94,7 +83,6 @@ function ListContainer() {
     <hr/>
     <ListGroup done={true}
                list={list.filter((item) => item.done).map(item => createTaskItem(item))}></ListGroup>
-
   </div>);
 }
 
