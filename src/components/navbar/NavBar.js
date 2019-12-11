@@ -6,8 +6,8 @@ import './navbar.scss';
 function NavBar () {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   let navButton = isAuthenticated ?
-    (<button type="button" className="btn btn-outline-success" onClick={() => logout()}>Log out</button>) :
-    (<button type="button" className="btn btn-outline-success" onClick={() => loginWithRedirect({})}>Log in</button>);
+    (<button type="button" className="btn btn-outline-info" onClick={() => logout()}>Log out</button>) :
+    (<button type="button" className="btn btn-outline-info" onClick={() => loginWithRedirect({})}>Log in</button>);
 
   return (
   <nav className="navbar navbar-light bg-light">

@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as axios from 'axios/index';
-import AlertError from '../shared/AlertError';
 import { useAuth0 } from '../../react-auth0-spa';
 import { BACKEND_URL } from '../../config';
+import AlertError from '../shared/AlertError';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
+import ListGroup from './ListGroup';
 
 function ListContainer() {
-  const { getTokenSilently } = useAuth0();
+  const {getTokenSilently} = useAuth0();
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
@@ -71,20 +72,25 @@ function ListContainer() {
   };
 
   return (<div className="container-fluid">
-        <div className="row mb-3">
-          <div className="col-12">
-            <TaskForm onFormSubmit={handleTaskEdit}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <AlertError text={error} />
-            {loading}
-          </div>
-        </div>
-        <div className="row">{list.filter((item) => !item.done).map(item => createTaskItem(item))}</div>
-        <div className="row">{list.filter((item) =>  item.done).map(item => createTaskItem(item))}</div>
-      </div>);
+    <div className="row mt-3 mb-5">
+      <div className="col-md-8 offset-md-2 mb-3">
+        <TaskForm onFormSubmit={handleTaskEdit}/>
+      </div>
+    </div>
+    <hr/>
+    <div className="row">
+      <div className="col-12">
+        <AlertError text={error}/>
+        {loading}
+      </div>
+    </div>
+    <ListGroup done={false}
+               list={list.filter((item) => !item.done).map(item => createTaskItem(item))}/>
+    <hr/>
+    <ListGroup done={true}
+               list={list.filter((item) => item.done).map(item => createTaskItem(item))}></ListGroup>
+
+  </div>);
 }
 
 export default ListContainer;
