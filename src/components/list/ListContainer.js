@@ -7,6 +7,7 @@ import AlertError from '../shared/AlertError';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
 import ListGroup from './ListGroup';
+import TaskListBar from './TaskListBar';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
@@ -73,11 +74,14 @@ function ListContainer() {
   };
 
   return (<div className="container-fluid">
+
     <div className="row mt-3 mb-5">
       <div className="col-md-8 offset-md-2 mb-3">
         <TaskForm onFormSubmit={handleTaskEdit}/>
       </div>
     </div>
+    <hr/>
+    <TaskListBar />
     <hr/>
     <div className="row">
       <div className="col-12">

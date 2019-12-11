@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import formValidator from '../../utils/formValidator';
-
 function TaskForm(props) {
   const initFormValue = props.initValue || {title: '', text: '', important: false};
   const [values, setValues] = useState(initFormValue);
@@ -56,7 +56,8 @@ function TaskForm(props) {
         </div>
 
         <button className="btn btn-outline-info float-right"
-                onClick={handlerSubmitForm}>Create</button>
+                onClick={handlerSubmitForm}>
+          Create</button>
       </form>
     </div>
   );

@@ -1,15 +1,16 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TaskForm from './list/TaskForm';
 import history from '../utils/history';
 
 function EditTask(props) {
-  if (!props.location.state) {
-    goToList();
-  }
-
   const goToList = () => {
     history.push('/list');
   };
+
+  if (!props.location.state) {
+    goToList();
+  }
 
   const handleTaskEdit = (value) => {
     console.log(value);
@@ -18,10 +19,12 @@ function EditTask(props) {
   return (
     <div className="container-fluid">
 
-      <div className="row mb-3">
+      <div className="row mt-3 mb-3">
         <div className="col-12">
           <button type="button" className="btn btn-sm btn-outline-info"
-                  onClick={goToList}>Back to List</button>
+                  onClick={goToList}>
+            <FontAwesomeIcon icon="arrow-left" className="mr-1" />
+            Back to List</button>
         </div>
       </div>
       <div className="row">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function ListGroup(props) {
-  const title = props.done === true ? 'Finished tasks' : 'Actual tasks';
+  const title = props.done === true ? 'Finished tasks' : 'Active tasks';
 
   return (
     <>

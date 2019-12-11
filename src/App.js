@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import ListContainer from './components/list/ListContainer';
 import WelcomePage from './components/WelcomePage';
 import EditTask from './components/EditTask';
+import IconLibrary from './utils/IconsLibrarty';
 
 function App() {
   const { loading } = useAuth0();

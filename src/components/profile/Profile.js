@@ -17,8 +17,6 @@ function Profile () {
           <p className="profile__text">{user.email}</p>
         </div>
       </div>
-      /*<p>{user.email}</p>*/
-      /*<code>{JSON.stringify(user, null, 2)}</code>*/
   );
 }
 
