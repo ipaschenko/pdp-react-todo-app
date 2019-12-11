@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as axios from 'axios/index';
+import history from '../../utils/history';
 import { useAuth0 } from '../../react-auth0-spa';
 import { BACKEND_URL } from '../../config';
 import AlertError from '../shared/AlertError';
@@ -60,7 +61,7 @@ function ListContainer() {
   };
 
   const editTask = (task) => {
-
+    history.push('/task-edit', task);
   };
 
   const createTaskItem = (task) => {

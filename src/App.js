@@ -6,6 +6,7 @@ import history from './utils/history';
 import PrivateRoute from './components/PrivateRoute';
 import ListContainer from './components/list/ListContainer';
 import WelcomePage from './components/WelcomePage';
+import EditTask from './components/EditTask';
 
 function App() {
   const { loading } = useAuth0();
@@ -23,6 +24,7 @@ function App() {
         <Switch>
           <Route path="/start" component={WelcomePage} />
           <PrivateRoute path="/list" component={ListContainer} />
+          <PrivateRoute path="/task-edit" component={EditTask} />
           <Redirect from="/" to="list"/>
         </Switch>
       </Router>

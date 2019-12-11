@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import formValidator from '../../utils/formValidator';
 
 function TaskForm(props) {
-  const initFormValue = {title: '', text: '', important: false};
+  const initFormValue = props.initValue || {title: '', text: '', important: false};
   const [values, setValues] = useState(initFormValue);
 
   const handleFormControlChange = (e) => {
@@ -55,7 +55,7 @@ function TaskForm(props) {
           </div>
         </div>
 
-        <button className="btn btn-outline-primary float-right"
+        <button className="btn btn-outline-info float-right"
                 onClick={handlerSubmitForm}>Create</button>
       </form>
     </div>

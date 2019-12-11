@@ -6,7 +6,7 @@ function ListItem(props) {
       return (<div className="d-flex justify-content-between">
         <button type="button"
                 className="btn btn-outline-info btn-sm"
-                onClick={props.onDone(task._id)}>Done</button>
+                onClick={() => props.onDone(task._id)}>Done</button>
 
         <button type="button"
                 className="btn btn-outline-info btn-sm"
