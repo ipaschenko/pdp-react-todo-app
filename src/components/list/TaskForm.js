@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import formValidator from '../../utils/formValidator';
+import { INIT_FORM_VALUE }  from '../../constants/init-form-value';
 function TaskForm(props) {
-  const initFormValue = props.initValue || {title: '', text: '', important: false};
-  const [values, setValues] = useState(initFormValue);
+  const [formValues, setFormValues] = useState(props.initValue || INIT_FORM_VALUE);
 
   const handleFormControlChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value});
+    setFormValues({...formValues, [e.target.name]: e.target.value});
   };
 
   const handleCheckboxChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.checked}, () => {});
-  }
+    setFormValues({...formValues, [e.target.name]: e.target.checked}, () => {});
+  };
   
   const handlerSubmitForm = (e) => {
     e.preventDefault();
-    if (formValidator(values)) {
-      console.log(values);
-      props.onFormSubmit(values);
-      setValues(initFormValue);
+    if (formValidator(formValues)) {
+      props.onFormSubmit(formValues);
+    }
+
+    if (!props.edit) {
+      setFormValues(INIT_FORM_VALUE);
     }
   };
 
@@ -26,19 +27,20 @@ function TaskForm(props) {
     <div className='form-group'>
       <form onSubmit={handlerSubmitForm}>
         <div className='form-group'>
+          <label>Title *</label>
           <input className="form-control"
                  type="text"
                  name='title'
-                 placeholder="Title"
-                 value={values.title}
+
+                 value={formValues.title}
                  onChange={handleFormControlChange} required/>
         </div>
 
         <div className='form-group'>
+          <label >Description</label>
           <textarea className="form-control"
                     name="text"
-                    placeholder="Text"
-                    value={values.text}
+                    value={formValues.text}
                     onChange={handleFormControlChange}></textarea>
         </div>
 
@@ -48,7 +50,7 @@ function TaskForm(props) {
                    className="form-check-input"
                    id="important"
                    name="important"
-                   defaultChecked={values.important}
+                   defaultChecked={formValues.important}
                    onChange={handleCheckboxChange} />
             <label className="form-check-label"
                    htmlFor="important">Important</label>

@@ -33,7 +33,7 @@ function ListItem(props) {
       <div className={'card mb-3 ' + (props.task.done ? 'text-secondary' : '')}>
         <div className="card-body">
           <h5 className="card-title">{importance} {props.task.title}</h5>
-          <p className="card-text">{props.task.text}</p>
+          <p className="card-text"><em>{props.task.text}</em></p>
           {getActions(props.task)}
         </div>
       </div>
