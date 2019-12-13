@@ -8,6 +8,7 @@ import ListContainer from './components/list/ListContainer';
 import WelcomePage from './components/WelcomePage';
 import EditTask from './components/EditTask';
 import IconLibrary from './utils/IconsLibrarty';
+import ListContainerClass from './components/list/ListContainerClass';
 
 function App() {
   const { loading } = useAuth0();
@@ -24,7 +25,8 @@ function App() {
         </header>
         <Switch>
           <Route path="/start" component={WelcomePage} />
-          <PrivateRoute path="/list" component={ListContainer} />
+          {/*<PrivateRoute path="/list" component={ListContainer} />*/}
+          <PrivateRoute path="/list" component={ListContainerClass} />
           <PrivateRoute path="/task-edit" component={EditTask} />
           <Redirect from="/" to="list"/>
         </Switch>

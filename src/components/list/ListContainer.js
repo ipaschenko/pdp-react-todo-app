@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import history from '../../utils/history';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../../utils/HttpService';
-import { useAuth0 } from '../../react-auth0-spa';
+import { Auth0Context, useAuth0 } from '../../react-auth0-spa';
 import AlertError from '../shared/AlertError';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
@@ -10,6 +10,7 @@ import TaskListBar from './TaskListBar';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
+  const auth0Context = React.useContext(Auth0Context);
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
@@ -17,7 +18,8 @@ function ListContainer() {
 
   const getList = useCallback(async () => {
     const token = await getTokenSilently();
-    fetchTasks(token)
+    console.log('getList');
+    fetchTasks()
       .then((res) => {
         setList(res.data);
         setLoading(false);
@@ -44,10 +46,14 @@ function ListContainer() {
   };
 
   const doneItem = async (id) => {
-    const token = await getTokenSilently();
-    updateTask(token, id, {done: true})
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+    console.log('doneItem');
+    const t = await auth0Context.getTokenSilently();
+    console.log(t);
+
+    // const token = await getTokenSilently();
+    // updateTask(token, id, {done: true})
+    //   .then(() => getList())
+    //   .catch((err) => setError(err.toString()));
   };
 
   const editItem = (task) => {

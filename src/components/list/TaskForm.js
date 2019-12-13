@@ -9,7 +9,7 @@ function TaskForm(props) {
   };
 
   const handleCheckboxChange = (e) => {
-    setFormValues({...formValues, [e.target.name]: e.target.checked}, () => {});
+    setFormValues({...formValues, [e.target.name]: e.target.checked});
   };
   
   const handlerSubmitForm = (e) => {
