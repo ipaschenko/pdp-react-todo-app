@@ -2,18 +2,19 @@ import React, { useEffect, useState, useCallback } from 'react';
 import history from '../../utils/history';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../../utils/HttpService';
 import { useAuth0 } from '../../react-auth0-spa';
-import AlertError from '../shared/AlertError';
+// import PushMessage from '../push/PushMessage';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
 import ListGroup from './ListGroup';
 import TaskListBar from './TaskListBar';
+import PushContainer from '../push/PushContainer';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const getList = useCallback(async () => {
     const token = await getTokenSilently();
@@ -22,7 +23,7 @@ function ListContainer() {
         setList(res.data);
         setLoading(false);
       })
-      .catch((err) => setError(err.toString()));
+      .catch((err) => setMessage({message: err.toString(), type: 'error', key: new Date().getTime()}));
   }, [getTokenSilently]);
 
   useEffect(() => {
@@ -32,22 +33,31 @@ function ListContainer() {
   const handleTaskEdit = async (formValue) => {
     const token = await getTokenSilently();
     createTask(token, formValue)
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+      .then((res) => {
+        setMessage({message: res.data, type: 'info', key: new Date().getTime()});
+        getList();
+      })
+  .catch((err) => setMessage({message: err.toString(), type: 'error', key: new Date().getTime()}));
   };
 
   const deleteItem = async (id) => {
     const token = await getTokenSilently();
     deleteTask(token, id)
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+      .then((res) => {
+        setMessage({message: res.data, type: 'info', key: new Date().getTime()});
+        getList();
+      })
+      .catch((err) => setMessage({message: err.toString(), type: 'error', key: new Date().getTime()}));
   };
 
   const doneItem = async (id) => {
     const token = await getTokenSilently();
     updateTask(token, id, {done: true})
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+      .then((res) => {
+        setMessage({message: res.data, type: 'info', key: new Date().getTime()});
+        getList();
+      })
+      .catch((err) => setMessage({message: err.toString(), type: 'error', key: new Date().getTime()}));
   };
 
   const editItem = (task) => {
@@ -74,8 +84,7 @@ function ListContainer() {
     <hr/>
     <div className="row">
       <div className="col-12">
-        <AlertError text={error}/>
-        {loading}
+        {/*{loading}*/}
       </div>
     </div>
     <ListGroup done={false}
@@ -83,6 +92,7 @@ function ListContainer() {
     <hr/>
     <ListGroup done={true}
                list={list.filter((item) => item.done).map(item => createTaskItem(item))}></ListGroup>
+    <PushContainer message={message} />
   </div>);
 }
 
