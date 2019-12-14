@@ -79,7 +79,6 @@ function ListContainer() {
   };
 
 
-
   return (<div className="container-fluid">
     <div className="row mt-3 mb-5">
       <div className="col-md-8 offset-md-2 mb-3">
@@ -87,7 +86,10 @@ function ListContainer() {
       </div>
     </div>
     <hr/>
-    <TaskListBar />
+    <div className="alert alert-dark">
+      <TaskListBar />
+    </div>
+
     <hr/>
     <ListGroup done={false}
                list={list.filter((item) => !item.done).map(item => createTaskItem(item))}/>
