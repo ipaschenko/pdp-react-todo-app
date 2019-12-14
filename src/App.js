@@ -25,8 +25,8 @@ function App() {
         </header>
         <Switch>
           <Route path="/start" component={WelcomePage} />
-          {/*<PrivateRoute path="/list" component={ListContainer} />*/}
-          <PrivateRoute path="/list" component={ListContainerClass} />
+          <PrivateRoute path="/list" component={ListContainer} />
+          {/*<PrivateRoute path="/list" component={ListContainerClass} />*/}
           <PrivateRoute path="/task-edit" component={EditTask} />
           <Redirect from="/" to="list"/>
         </Switch>

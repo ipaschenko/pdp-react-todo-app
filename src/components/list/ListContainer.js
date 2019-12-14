@@ -1,30 +1,35 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import history from '../../utils/history';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../../utils/HttpService';
-import { Auth0Context, useAuth0 } from '../../react-auth0-spa';
-import AlertError from '../shared/AlertError';
+import { useAuth0 } from '../../react-auth0-spa';
 import TaskForm from './TaskForm';
 import ListItem from './ListItem';
 import ListGroup from './ListGroup';
 import TaskListBar from './TaskListBar';
+import PushContainer from '../push/PushContainer';
+import Spinner from '../shared/Spinner';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
-  const auth0Context = React.useContext(Auth0Context);
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const showMessage = (text, type) => {
+    const key = new Date().getTime();
+    setMessage({text, type, key});
+  }
 
   const getList = useCallback(async () => {
+    setLoading(true);
     const token = await getTokenSilently();
-    console.log('getList');
-    fetchTasks()
+    fetchTasks(token)
       .then((res) => {
         setList(res.data);
         setLoading(false);
       })
-      .catch((err) => setError(err.toString()));
+      .catch((err) => showMessage(err.toString(), 'error'));
   }, [getTokenSilently]);
 
   useEffect(() => {
@@ -34,26 +39,31 @@ function ListContainer() {
   const handleTaskEdit = async (formValue) => {
     const token = await getTokenSilently();
     createTask(token, formValue)
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+      .then((res) => {
+        showMessage(res.data, 'info');
+        getList();
+      })
+      .catch((err) => showMessage(err.toString(), 'error'));
   };
 
   const deleteItem = async (id) => {
     const token = await getTokenSilently();
     deleteTask(token, id)
-      .then(() => getList())
-      .catch((err) => setError(err.toString()));
+      .then((res) => {
+        showMessage(res.data, 'info');
+        getList();
+      })
+      .catch((err) => showMessage(err.toString(), 'error'));
   };
 
   const doneItem = async (id) => {
-    console.log('doneItem');
-    const t = await auth0Context.getTokenSilently();
-    console.log(t);
-
-    // const token = await getTokenSilently();
-    // updateTask(token, id, {done: true})
-    //   .then(() => getList())
-    //   .catch((err) => setError(err.toString()));
+    const token = await getTokenSilently();
+    updateTask(token, id, {done: true})
+      .then((res) => {
+        showMessage(res.data, 'info');
+        getList();
+      })
+      .catch((err) => showMessage(err.toString(), 'error'));
   };
 
   const editItem = (task) => {
@@ -68,8 +78,9 @@ function ListContainer() {
                       onDone={doneItem}/>);
   };
 
-  return (<div className="container-fluid">
 
+
+  return (<div className="container-fluid">
     <div className="row mt-3 mb-5">
       <div className="col-md-8 offset-md-2 mb-3">
         <TaskForm onFormSubmit={handleTaskEdit}/>
@@ -78,17 +89,13 @@ function ListContainer() {
     <hr/>
     <TaskListBar />
     <hr/>
-    <div className="row">
-      <div className="col-12">
-        <AlertError text={error}/>
-        {loading}
-      </div>
-    </div>
     <ListGroup done={false}
                list={list.filter((item) => !item.done).map(item => createTaskItem(item))}/>
     <hr/>
     <ListGroup done={true}
                list={list.filter((item) => item.done).map(item => createTaskItem(item))}></ListGroup>
+    <PushContainer message={message} />
+    <Spinner loading={loading}></Spinner>
   </div>);
 }
 
