@@ -4,10 +4,10 @@ import TaskForm from './list/TaskForm';
 import history from '../utils/history';
 import { useAuth0 } from '../react-auth0-spa';
 import { updateTask } from '../utils/HttpService';
-import Spinner from './list/ListContainer';
+import Spinner from './shared/Spinner';
 
 function EditTask(props) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const oldTaskValues = {};
   const {getTokenSilently} = useAuth0();
