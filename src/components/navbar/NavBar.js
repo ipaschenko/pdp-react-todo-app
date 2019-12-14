@@ -15,7 +15,7 @@ function NavBar () {
     (<button type="button" className="btn btn-outline-info" onClick={() => loginWithRedirect({})}>Log in</button>);
 
   return (
-  <nav className="navbar navbar-light bg-light">
+  <nav className="navbar bg-secondary text-white">
     <div className="d-flex justify-content-center align-content-center">
         <img src="https://icon-library.net/images/react-icon/react-icon-14.jpg"
              style={{height: '56px', cursor: 'pointer'}}
