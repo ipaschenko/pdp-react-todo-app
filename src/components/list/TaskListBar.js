@@ -1,7 +1,6 @@
 import React from 'react';
 
 function TaskListBar(props) {
-  console.log(props);
   return (
     <div>
       <div className="btn-group btn-group-toggle">

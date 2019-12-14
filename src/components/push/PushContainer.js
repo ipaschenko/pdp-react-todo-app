@@ -31,7 +31,6 @@ class PushContainer extends React.Component {
   };
 
   render () {
-    console.log(this.state);
     const messages = this.state.messages
       .map((item) => {
         return (<PushMessage text={item.text}
