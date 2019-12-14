@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TaskForm from './list/TaskForm';
 import history from '../utils/history';
 import { useAuth0 } from '../react-auth0-spa';
 import { updateTask } from '../utils/HttpService';
+import Spinner from './list/ListContainer';
 
 function EditTask(props) {
+  const [loading, setLoading] = useState(true);
+
   const oldTaskValues = {};
   const {getTokenSilently} = useAuth0();
   const goToList = () => {
@@ -21,7 +24,7 @@ function EditTask(props) {
   }
 
   const handleFormSubmit = async(value) => {
-    console.log(value);
+    setLoading(true);
     const token = await getTokenSilently();
     updateTask(token, props.location.state._id, value)
       .then(() => goToList())
@@ -44,6 +47,7 @@ function EditTask(props) {
                     initValue={oldTaskValues} onFormSubmit={handleFormSubmit} />
         </div>
       </div>
+      <Spinner loading={loading}></Spinner>
     </div>
   );
 }
