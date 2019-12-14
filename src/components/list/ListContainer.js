@@ -11,30 +11,29 @@ import Spinner from '../shared/Spinner';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
-
   const [loading, setLoading] = useState(true);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState({active: [], done: []});
   const [message, setMessage] = useState('');
+  const [showOptions, setShowOptions] = useState({active: true, done:true});
 
   const showMessage = (text, type) => {
     const key = new Date().getTime();
     setMessage({text, type, key});
-  }
+  };
 
   const getList = useCallback(async () => {
     setLoading(true);
     const token = await getTokenSilently();
     fetchTasks(token)
       .then((res) => {
-        setList(res.data);
+        setList({
+          active: res.data.filter((item) => !item.done),
+          done: res.data.filter((item) => item.done),
+        });
         setLoading(false);
       })
       .catch((err) => showMessage(err.toString(), 'error'));
   }, [getTokenSilently]);
-
-  useEffect(() => {
-    getList();
-  }, [getList]);
 
   const handleTaskEdit = async (formValue) => {
     const token = await getTokenSilently();
@@ -77,7 +76,13 @@ function ListContainer() {
                       onEdit={editItem}
                       onDone={doneItem}/>);
   };
+    const showChangeHandler = (type) => {
+      setShowOptions({...showOptions, [type]: !showOptions[type]});
+    };
 
+  useEffect(() => {
+    getList();
+  }, [getList]);
 
   return (<div className="container-fluid">
     <div className="row mt-3 mb-5">
@@ -87,17 +92,23 @@ function ListContainer() {
     </div>
     <hr/>
     <div className="alert alert-dark">
-      <TaskListBar />
+      <TaskListBar activeCount={list.active.length}
+                   activeShow={showOptions.active}
+                   doneShow={showOptions.done}
+                   doneCount={list.done.length}
+                   onShowChange={showChangeHandler} />
     </div>
 
     <hr/>
-    <ListGroup done={false}
-               list={list.filter((item) => !item.done).map(item => createTaskItem(item))}/>
+    <ListGroup type="active"
+               list={list.active.map(item => createTaskItem(item))}
+               show={showOptions.active} />
     <hr/>
-    <ListGroup done={true}
-               list={list.filter((item) => item.done).map(item => createTaskItem(item))}></ListGroup>
+    <ListGroup type="done"
+               list={list.done.map(item => createTaskItem(item))}
+               show={showOptions.done}/>
     <PushContainer message={message} />
-    <Spinner loading={loading}></Spinner>
+    <Spinner loading={loading} />
   </div>);
 }
 
