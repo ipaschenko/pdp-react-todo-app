@@ -3,7 +3,6 @@ import React from 'react';
 function ListGroup(props) {
   if (!props.show) {
     return null;
-
   }
 
   const title = props.type === "done" ? 'Finished tasks' : 'Active tasks';
