@@ -32,7 +32,10 @@ function ListContainer() {
         });
         setLoading(false);
       })
-      .catch((err) => showMessage(err.toString(), 'error'));
+      .catch((err) => {
+        setLoading(false);
+        showMessage(err.toString(), 'error');
+      });
   }, [getTokenSilently]);
 
   const handleTaskEdit = async (formValue) => {
