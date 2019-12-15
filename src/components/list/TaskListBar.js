@@ -1,20 +1,23 @@
 import React from 'react';
+import ToggleButton from './ToggleButton';
 
 function TaskListBar(props) {
   return (
-    <div>
-      <div className="btn-group btn-group-toggle">
-        <button type="button" className={'btn btn-sm btn-outline-info ' + (props.activeShow ? 'active' : '')}
-                onClick={() => props.onShowChange('active')}>
-          Active
-          <span className="badge badge-light ml-1">{props.activeCount}</span>
-        </button>
-        <button type="button" className={'btn btn-sm btn-outline-info ' +  (props.doneShow ? 'active' : '')}
-                onClick={() => props.onShowChange('done')}>
-          Done
-          <span className="badge badge-light ml-1">{props.doneCount}</span>
-        </button>
+    <div className="alert alert-dark d-flex justify-content-start align-content-start">
+      <div className="mr-3">
+        <div className="btn-group btn-group-toggle">
+          <ToggleButton name="active"
+                        active={props.showOptions.active}
+                        count={props.activeCount}
+                        onShowChange={props.onShowChange} />
+          <ToggleButton name="done"
+                        active={props.showOptions.done}
+                        count={props.doneCount}
+                        onShowChange={props.onShowChange} />
+        </div>
       </div>
+
+      {props.search}
     </div>
   );
 }

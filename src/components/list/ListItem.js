@@ -21,8 +21,12 @@ function ListItem(props) {
           <FontAwesomeIcon icon="trash-alt" className="mr-1" /> Delete</button>
       </div>);
     }
-
-    return null;
+    return (<div className="d-flex justify-content-end">
+      <button type="button"
+              className="btn btn-outline-danger btn-sm"
+              onClick={() => props.onDelete(task._id)}>
+        <FontAwesomeIcon icon="trash-alt" className="mr-1" /> Delete</button>
+    </div>);
   };
 
   const importance =

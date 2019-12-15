@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAuth0 } from '../../react-auth0-spa';
-import Profile from '../profile/Profile';
-import history from '../../utils/history';
+import { useAuth0 } from '../react-auth0-spa';
+import Profile from './profile/Profile';
+import history from '../utils/history';
 
 function NavBar () {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();

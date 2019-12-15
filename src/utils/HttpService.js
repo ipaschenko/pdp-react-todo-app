@@ -1,5 +1,5 @@
 import * as axios from 'axios/index';
-import { BASE_URL } from '../config';
+import { BASE_URL } from '../constants/base-url';
 
 export const fetchTasks = (token) => {
   const headers = {Authorization: `Bearer ${token}`};

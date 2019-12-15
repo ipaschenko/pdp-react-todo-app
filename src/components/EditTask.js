@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TaskForm from './list/TaskForm';
+import TaskForm from './shared/TaskForm';
 import history from '../utils/history';
 import { useAuth0 } from '../react-auth0-spa';
 import { updateTask } from '../utils/HttpService';
@@ -11,9 +11,7 @@ function EditTask(props) {
 
   const oldTaskValues = {};
   const {getTokenSilently} = useAuth0();
-  const goToList = () => {
-    history.push('/list');
-  };
+  const goToList = () => history.push('/list');
 
   if (!props.location.state) {
     goToList();

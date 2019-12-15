@@ -2,12 +2,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import history from '../../utils/history';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../../utils/HttpService';
 import { useAuth0 } from '../../react-auth0-spa';
-import TaskForm from './TaskForm';
+import TaskForm from '../shared/TaskForm';
 import ListItem from './ListItem';
 import ListGroup from './ListGroup';
 import TaskListBar from './TaskListBar';
 import PushContainer from '../push/PushContainer';
 import Spinner from '../shared/Spinner';
+import Search from '../shared/Search';
+import { taskFilter } from '../../utils/taskFiler';
 
 function ListContainer() {
   const {getTokenSilently} = useAuth0();
@@ -15,6 +17,7 @@ function ListContainer() {
   const [list, setList] = useState({active: [], done: []});
   const [message, setMessage] = useState('');
   const [showOptions, setShowOptions] = useState({active: true, done:true});
+  const [searchText, setSearchText] = useState('');
 
   const showMessage = (text, type) => {
     const key = new Date().getTime();
@@ -79,9 +82,12 @@ function ListContainer() {
                       onEdit={editItem}
                       onDone={doneItem}/>);
   };
-    const showChangeHandler = (type) => {
-      setShowOptions({...showOptions, [type]: !showOptions[type]});
-    };
+
+  const showChangeHandler = (type) => {
+    setShowOptions({...showOptions, [type]: !showOptions[type]});
+  };
+
+  const search = <Search onChange={setSearchText}></Search>;
 
   useEffect(() => {
     getList();
@@ -94,21 +100,16 @@ function ListContainer() {
       </div>
     </div>
     <hr/>
-    <div className="alert alert-dark">
-      <TaskListBar activeCount={list.active.length}
-                   activeShow={showOptions.active}
-                   doneShow={showOptions.done}
-                   doneCount={list.done.length}
-                   onShowChange={showChangeHandler} />
-    </div>
-
-    <hr/>
+    <TaskListBar activeCount={list.active.length}
+                 doneCount={list.done.length}
+                 showOptions={showOptions}
+                 onShowChange={showChangeHandler}
+                 search={search}  />
     <ListGroup type="active"
-               list={list.active.map(item => createTaskItem(item))}
+               list={list.active.filter((task) => taskFilter(task, searchText)).map(item => createTaskItem(item))}
                show={showOptions.active} />
-    <hr/>
     <ListGroup type="done"
-               list={list.done.map(item => createTaskItem(item))}
+               list={list.done.filter((task) => taskFilter(task, searchText)).map(item => createTaskItem(item))}
                show={showOptions.done}/>
     <PushContainer message={message} />
     <Spinner loading={loading} />
