@@ -43,7 +43,7 @@ function EditTask(props) {
       </div>
       <div className="row">
         <div className="col-md-8 offset-md-2 mb-3">
-          <TaskForm edit={true}
+          <TaskForm mode="edit"
                     initValue={oldTaskValues} onFormSubmit={handleFormSubmit} />
         </div>
       </div>

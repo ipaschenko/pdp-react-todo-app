@@ -90,7 +90,7 @@ function ListContainer() {
   return (<div className="container-fluid">
     <div className="row mt-3 mb-5">
       <div className="col-md-8 offset-md-2 mb-3">
-        <TaskForm onFormSubmit={handleTaskEdit}/>
+        <TaskForm mode="create" onFormSubmit={handleTaskEdit}/>
       </div>
     </div>
     <hr/>

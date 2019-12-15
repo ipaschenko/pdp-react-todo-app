@@ -18,10 +18,12 @@ function TaskForm(props) {
       props.onFormSubmit(formValues);
     }
 
-    if (!props.edit) {
+    if (props.mode === 'create') {
       setFormValues(INIT_FORM_VALUE);
     }
   };
+
+  const submitButtonText = props.mode === 'create' ? 'Create' : 'Save';
 
   return (
     <div className='form-group'>
@@ -59,7 +61,7 @@ function TaskForm(props) {
 
         <button className="btn btn-outline-info float-right"
                 onClick={handlerSubmitForm}>
-          Create</button>
+          {submitButtonText}</button>
       </form>
     </div>
   );
