@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PushMessage from './PushMessage';
 
-class PushContainer extends React.Component {
+class PushContainerOld extends React.Component {
   constructor(props) {
     super(props);
     this.state = {messages: []};
@@ -46,4 +46,4 @@ class PushContainer extends React.Component {
   }
 }
 
-export default PushContainer;
+export default PushContainerOld;

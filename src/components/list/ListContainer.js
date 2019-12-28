@@ -6,7 +6,7 @@ import TaskForm from '../shared/TaskForm';
 import ListItem from './ListItem';
 import ListGroup from './ListGroup';
 import TaskListBar from './TaskListBar';
-import PushContainer from '../push/PushContainer';
+import PushContainerOld from '../push/PushContainerOld';
 import Spinner from '../shared/Spinner';
 import Search from '../shared/Search';
 import { taskFilter } from '../../utils/taskFiler';
@@ -111,7 +111,7 @@ function ListContainer() {
     <ListGroup type="done"
                list={list.done.filter((task) => taskFilter(task, searchText)).map(item => createTaskItem(item))}
                show={showOptions.done}/>
-    <PushContainer message={message} />
+    <PushContainerOld message={message} />
     <Spinner loading={loading} />
   </div>);
 }
