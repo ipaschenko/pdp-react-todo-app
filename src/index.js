@@ -6,7 +6,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from './react-auth0-spa';
 import history from './utils/history';
-import config from './auth_config.json';
 
 const onRedirectCallback = (appState) => {
   history.push(
@@ -16,12 +15,24 @@ const onRedirectCallback = (appState) => {
   );
 };
 
+console.log(process.env.REACT_APP_AUTH0_CONFIG_DOMAIN);
+console.log(process.env.REACT_APP_AUTH0_CONFIG_CLIEND_ID);
+console.log(process.env.REACT_APP_AUTH0_CONFIG_AUDIENCE);
+
 ReactDOM.render(
+  // <Auth0Provider
+  //   domain={config.domain}
+  //   client_id={config.clientId}
+  //   redirect_uri={window.location.origin}
+  //   audience={config.audience}
+  //   onRedirectCallback={onRedirectCallback}
+  // >
+
   <Auth0Provider
-    domain={config.domain}
-    client_id={config.clientId}
+    domain={process.env.REACT_APP_AUTH0_CONFIG_DOMAIN}
+    client_id={process.env.REACT_APP_AUTH0_CONFIG_CLIEND_ID}
     redirect_uri={window.location.origin}
-    audience={config.audience}
+    audience={process.env.REACT_APP_AUTH0_CONFIG_AUDIENCE}
     onRedirectCallback={onRedirectCallback}
   >
     <App />

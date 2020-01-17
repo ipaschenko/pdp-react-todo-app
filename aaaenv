@@ -1,0 +1,5 @@
+REACT_APP_NOT_SECRET_CODE=abcdef
+HOST=localhost
+REACT_APP_AUTH0_CONFIG_DOMAIN=react-notepad.eu.auth0.com
+REACT_APP_AUTH0_CONFIG_CLIEND_ID=5hkU0EwutewkPIpo1pU9MyepYkt7zdTZ
+REACT_APP_AUTH0_CONFIG_AUDIENCE=https://react-notepad.eu.auth0.com/api/v2
