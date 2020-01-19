@@ -15,27 +15,13 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-console.log(process.env.REACT_APP_AUTH0_CONFIG_DOMAIN);
-console.log(process.env.REACT_APP_AUTH0_CONFIG_CLIENT_ID);
-console.log(process.env.REACT_APP_AUTH0_CONFIG_AUDIENCE);
-console.log(process.env.REACT_APP_AUTH0_CONFIG_SCOPE);
-
 ReactDOM.render(
-  // <Auth0Provider
-  //   domain={config.domain}
-  //   client_id={config.clientId}
-  //   redirect_uri={window.location.origin}
-  //   audience={config.audience}
-  //   onRedirectCallback={onRedirectCallback}
-  // >
-
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH0_CONFIG_DOMAIN}
     client_id={process.env.REACT_APP_AUTH0_CONFIG_CLIENT_ID}
     redirect_uri={window.location.origin}
     audience={process.env.REACT_APP_AUTH0_CONFIG_AUDIENCE}
-    onRedirectCallback={onRedirectCallback}
-  >
+    onRedirectCallback={onRedirectCallback}>
     <App />
   </Auth0Provider>,
   document.getElementById('root'));
