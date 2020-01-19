@@ -6,7 +6,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from './react-auth0-spa';
 import history from './utils/history';
-// import config from './auth_config.json';
 
 const onRedirectCallback = (appState) => {
   history.push(
@@ -16,7 +15,6 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-console.log('config', config);
 console.log(process.env);
 
 ReactDOM.render(
