@@ -13,7 +13,6 @@ function PushContainer(props) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log('useEffect');
     const lastMessage = messages && messages.slice(-1).pop();
     if (props.message && (!lastMessage || lastMessage.key !== props.message.key)) {
       setMessages([...messages, props.message]);

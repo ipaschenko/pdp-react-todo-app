@@ -13,7 +13,6 @@ export function PushList(props) {
 
 
   const list = props.messages.map((item) => {
-      console.log(messages, item);
       return (<PushMessage text={item.text}
                            type={item.type}
                            key={item.key}

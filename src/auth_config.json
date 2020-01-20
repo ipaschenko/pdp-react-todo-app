@@ -1,6 +1,0 @@
-{
-  "domain": "react-notepad.eu.auth0.com",
-  "clientId": "5hkU0EwutewkPIpo1pU9MyepYkt7zdTZ",
-  "audience": "https://react-notepad.eu.auth0.com/api/v2/",
-  "scope": "openid profile full_access"
-}
