@@ -45,7 +45,7 @@ function ListContainer() {
     const token = await getTokenSilently();
     createTask(token, formValue)
       .then((res) => {
-        showMessage(res.data, 'info');
+        showMessage(res.data.success, 'info');
         getList();
       })
       .catch((err) => showMessage(err.toString(), 'error'));
@@ -55,7 +55,7 @@ function ListContainer() {
     const token = await getTokenSilently();
     deleteTask(token, id)
       .then((res) => {
-        showMessage(res.data, 'info');
+        showMessage(res.data.success, 'info');
         getList();
       })
       .catch((err) => showMessage(err.toString(), 'error'));
@@ -65,7 +65,7 @@ function ListContainer() {
     const token = await getTokenSilently();
     updateTask(token, id, {done: true})
       .then((res) => {
-        showMessage(res.data, 'info');
+        showMessage(res.data.success, 'info');
         getList();
       })
       .catch((err) => showMessage(err.toString(), 'error'));
