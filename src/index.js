@@ -15,16 +15,7 @@ const onRedirectCallback = (appState) => {
   );
 };
 
-console.log(process.env);
-
 ReactDOM.render(
-    // <Auth0Provider
-    //     domain={config.domain}
-    //     client_id={config.clientId}
-    //     redirect_uri={window.location.origin}
-    //     audience={config.audience}
-    //     onRedirectCallback={onRedirectCallback}
-    // >
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH0_CONFIG_DOMAIN}
     client_id={process.env.REACT_APP_AUTH0_CONFIG_CLIENT_ID}
